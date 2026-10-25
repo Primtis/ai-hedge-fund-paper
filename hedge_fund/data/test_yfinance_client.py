@@ -189,6 +189,54 @@ def test_news_respects_end_date(yf_client):
     assert [n.title for n in yf_client.get_news("TEST", "2025-12-01", start_date="2025-10-01")] == ["New"]
 
 
+class _EmptyNewsTicker(FakeTicker):
+    def get_news(self, count=10, tab="news"):
+        return []  # what yfinance returns when Yahoo's ticker news endpoint 404s
+
+
+class _FakeSearch:
+    """Shape of yfinance.Search(...).news as served live: epoch-second publish time, flat fields."""
+    calls: list[dict] = []
+
+    def __init__(self, query, news_count=8, max_results=8):
+        type(self).calls.append({"query": query, "news_count": news_count})
+        self.news = [
+            {"title": "Fresh", "publisher": "Motley Fool", "link": "http://x/fresh",
+             "providerPublishTime": 1792958700, "type": "STORY"},      # 2026-10-25 20:05 UTC
+            {"title": "Older", "publisher": "Reuters", "link": "http://x/older",
+             "providerPublishTime": 1780000000, "type": "STORY"},      # 2026-05-28
+            {"title": "No time", "publisher": "Reuters", "link": "http://x/none", "type": "STORY"},
+        ]
+
+
+def test_news_falls_back_to_search_feed_when_ticker_feed_is_empty():
+    _FakeSearch.calls = []
+    client = YFinanceClient(ticker_factory=_EmptyNewsTicker, search_factory=_FakeSearch)
+    news = client.get_news("TEST", "2026-12-31")
+    assert [n.title for n in news] == ["Fresh", "Older"]  # newest first; undated item dropped
+    assert news[0].date == "2026-10-25T20:05:00+00:00"
+    assert (news[0].source, news[0].url) == ("Motley Fool", "http://x/fresh")
+    assert [n.title for n in client.get_news("TEST", "2026-06-30")] == ["Older"]  # end_date still applies
+    assert _FakeSearch.calls[0] == {"query": "TEST", "news_count": 100}
+
+
+def test_search_feed_is_not_touched_when_ticker_feed_has_news(yf_client):
+    _FakeSearch.calls = []
+    yf_client._search = _FakeSearch
+    assert [n.title for n in yf_client.get_news("TEST", "2025-12-01")] == ["New", "Old"]
+    assert _FakeSearch.calls == []
+
+
+def test_search_feed_outage_raises():
+    class Down:
+        def __init__(self, *args, **kwargs):
+            raise ConnectionError("proxy refused")
+
+    client = YFinanceClient(ticker_factory=_EmptyNewsTicker, search_factory=Down)
+    with pytest.raises(FDClientError, match="get_news"):
+        client.get_news("TEST", "2026-12-31")
+
+
 def test_insider_trades_are_dated_by_filing_not_trade(yf_client):
     yf_client.get_prices("TEST", "2025-11-03", "2025-11-05")
     yf_client.fakes["TEST"].insider_transactions = pd.DataFrame({

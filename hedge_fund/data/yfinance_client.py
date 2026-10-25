@@ -16,6 +16,8 @@ pipeline cares about. Know these before trusting a backtest on it:
   FILING_LAG_DAYS after the period ends — late rather than early, so the
   backtest errs towards less lookahead, not more.
 * News is only the recent feed; older ``end_date`` values return nothing.
+* Tickers use Yahoo's spelling: ``BRK-B``, not ``BRK.B`` (which returns no data).
+  Dots can't be rewritten blindly because they are also exchange suffixes (``VOD.L``).
 * Failures raise FDClientError (network, rate limit). An unknown ticker or a
   range with no bars is "no data" and returns empty. Yahoo does occasionally
   answer a transient failure with an empty frame; if a backtest looks
@@ -54,14 +56,16 @@ class YFinanceClient:
 
     cache_namespace = "yfinance"  # CachedDataClient keeps our answers apart from FD's
 
-    def __init__(self, ticker_factory=None) -> None:
+    def __init__(self, ticker_factory=None, search_factory=None) -> None:
         if ticker_factory is None:
             try:
                 import yfinance
             except ImportError as exc:
                 raise FDClientError("yfinance is not installed: pip install yfinance") from exc
             ticker_factory = yfinance.Ticker
+            search_factory = search_factory or yfinance.Search
         self._factory = ticker_factory
+        self._search = search_factory  # news fallback; None means no fallback (injected fakes)
         self._tickers: dict[str, object] = {}
 
     def __enter__(self) -> YFinanceClient:
@@ -250,21 +254,26 @@ class YFinanceClient:
         start_date: str | None = None,
         limit: int = 1000,
     ) -> list[CompanyNews]:
-        items = self._guard("get_news", lambda: self._ticker(ticker).get_news(count=min(limit, 100))) or []
+        count = min(limit, 100)
+        items = self._guard("get_news", lambda: self._ticker(ticker).get_news(count=count)) or []
+        if not items and self._search is not None:
+            # Yahoo's ticker news endpoint (xhr/ncp) answers 404 and yfinance turns that
+            # into an empty list; the search feed still serves the same headlines.
+            items = self._guard("get_news", lambda: self._search(ticker, news_count=count, max_results=1).news) or []
         out = []
         for item in items:
             content = item.get("content") or item
             title = content.get("title")
-            stamp = content.get("pubDate") or content.get("displayTime")
+            stamp = _news_stamp(content)
             if not title or not stamp:
                 continue
-            day = str(stamp)[:10]
+            day = stamp[:10]
             if day > end_date or (start_date and day < start_date):
                 continue
             out.append(CompanyNews(
-                ticker=ticker, title=title, date=str(stamp),
-                source=(content.get("provider") or {}).get("displayName") or "Yahoo Finance",
-                url=(content.get("canonicalUrl") or content.get("clickThroughUrl") or {}).get("url"),
+                ticker=ticker, title=title, date=stamp,
+                source=(content.get("provider") or {}).get("displayName") or content.get("publisher") or "Yahoo Finance",
+                url=(content.get("canonicalUrl") or content.get("clickThroughUrl") or {}).get("url") or content.get("link"),
             ))
         out.sort(key=lambda n: n.date or "", reverse=True)
         return out[:limit]
@@ -484,6 +493,17 @@ def _cell(frame, row: str, column) -> float | None:
         return None
     value = frame.at[row, column]
     return None if _nan(value) else float(value)
+
+
+def _news_stamp(content: dict) -> str | None:
+    """Publication time as an ISO string; the ticker feed carries ISO text, the search feed epoch seconds."""
+    stamp = content.get("pubDate") or content.get("displayTime")
+    if stamp:
+        return str(stamp)
+    epoch = content.get("providerPublishTime")
+    if epoch is None or _nan(epoch):
+        return None
+    return datetime.fromtimestamp(float(epoch), tz=timezone.utc).isoformat()
 
 
 def _nan(value) -> bool:
