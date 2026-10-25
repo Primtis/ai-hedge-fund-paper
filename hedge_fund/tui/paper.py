@@ -17,7 +17,8 @@ from textual.widgets import ContentSwitcher, Footer, OptionList, Static
 from textual.widgets.option_list import Option
 
 from hedge_fund import paths
-from hedge_fund.data import CachedDataClient, FDClient, PriceSnapshot
+from hedge_fund.data import CachedDataClient, PriceSnapshot
+from hedge_fund.data.factory import make_data_client
 from hedge_fund.data.bars import is_intraday
 from hedge_fund.fund import FundSpec
 from hedge_fund.llm import make_llm
@@ -494,7 +495,7 @@ class RunSessionScreen(Screen):
             spec = deployed.spec
             ledger = Ledger(directory)
             state = ledger.replay(spec.capital)
-            with FDClient() as raw:
+            with make_data_client() as raw:
                 data = CachedDataClient(raw, live=spec.is_intraday)
                 if self._redo:
                     if state.last_session is None:
@@ -526,7 +527,7 @@ class RunSessionScreen(Screen):
             # no client and simply runs.
             model = (cls(llm=make_llm(on_token=desk.feed))
                      if issubclass(cls, LLMAgent) else cls())
-            with FDClient() as raw:
+            with make_data_client() as raw:
                 fd = CachedDataClient(raw)
                 for as_of in dates:
                     for ticker in universe:
@@ -779,6 +780,6 @@ def _resolve_next_session(directory: Path) -> tuple[DeployedFund, FundState, str
     market for its closes; a minute fund's bar is read off the clock)."""
     deployed = load_deployed(directory)
     state = Ledger(directory).replay(deployed.spec.capital)
-    with FDClient() as raw:
+    with make_data_client() as raw:
         due = next_session(CachedDataClient(raw), deployed.spec, state.last_session)
     return deployed, state, due

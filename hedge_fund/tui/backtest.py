@@ -36,7 +36,8 @@ from hedge_fund.backtesting import (
 )
 from hedge_fund.backtesting.research import last_universe, save_result
 from hedge_fund.brokers import Fill
-from hedge_fund.data import CachedDataClient, FDClient
+from hedge_fund.data import CachedDataClient
+from hedge_fund.data.factory import make_data_client
 from hedge_fund.fund import discover_funds, Fund, FundSpec, normalize_universe
 from hedge_fund.pipeline import CycleRecord, mark_lookback_start
 from hedge_fund.scorecard import score
@@ -238,7 +239,7 @@ class BacktestScreen(Screen):
              universe: list[str]) -> None:
         app = self.app
         try:
-            with FDClient() as raw:
+            with make_data_client() as raw:
                 schedule = build_schedule(CachedDataClient(raw), spec.benchmark, start, end, spec.rebalance)
             grid = schedule.assessment_dates
             app.call_from_thread(self._begin_warm, spec, universe, len(grid))
@@ -255,7 +256,7 @@ class BacktestScreen(Screen):
             def valuation(i: int, n: int, value: DailyValuation) -> None:
                 app.call_from_thread(self._board_valuation, value)
 
-            with FDClient() as raw:
+            with make_data_client() as raw:
                 result = backtest_fund(fund, start, end, CachedDataClient(raw),
                                        universe, on_cycle=tick, on_valuation=valuation)
 
@@ -281,7 +282,7 @@ class BacktestScreen(Screen):
         bar = self.query_one("#warm-progress", ProgressBar)
 
         def prefetch(ticker: str, dates: list[str]) -> None:
-            with FDClient() as raw:  # own client per task (requests isn't shared-safe)
+            with make_data_client() as raw:  # own client per task (requests isn't shared-safe)
                 fd = CachedDataClient(raw)
                 if has_agents:
                     fd.get_company_facts(ticker)
@@ -312,7 +313,7 @@ class BacktestScreen(Screen):
             who = display[agent_name]
             cls = ALPHA_MODEL_REGISTRY[agent_name]  # own instance per thread
             model = cls(blind=True) if issubclass(cls, LLMAgent) else cls()
-            with FDClient() as raw:
+            with make_data_client() as raw:
                 fd = CachedDataClient(raw)
                 for as_of in grid:
                     for ticker in universe:

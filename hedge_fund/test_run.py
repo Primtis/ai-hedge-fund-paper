@@ -38,7 +38,7 @@ def offline(tmp_path, monkeypatch):
     monkeypatch.setattr(run, "ensure_mandates_dir", lambda: tmp_path)
     monkeypatch.setattr(run, "Fund", build_fund)
     monkeypatch.setattr(tick_module, "Fund", build_fund)
-    monkeypatch.setattr(run, "FDClient", OfflineClient)
+    monkeypatch.setattr(run, "make_data_client", OfflineClient)
     monkeypatch.setattr(run, "CachedDataClient", lambda client, **kwargs: client)
     monkeypatch.setattr(run, "PAPER_DIR", tmp_path / "paper")
     monkeypatch.setattr(paths, "RESEARCH_DIR", tmp_path / "research")
@@ -85,7 +85,7 @@ def test_cli_rejects_invalid_configuration_before_clients(tmp_path, monkeypatch,
     monkeypatch.setattr(run, "apply_credentials", lambda: None)
     monkeypatch.setattr(run, "ensure_mandates_dir", lambda: tmp_path)
     monkeypatch.setattr(run, "Fund", forbidden)
-    monkeypatch.setattr(run, "FDClient", forbidden)
+    monkeypatch.setattr(run, "make_data_client", forbidden)
     monkeypatch.setattr(run, "deploy", forbidden)
     monkeypatch.setattr(run, "PAPER_DIR", tmp_path / "paper")
     argv = (["backtest", str(path), "--universe", "AAPL"] if command == "backtest"
@@ -224,7 +224,7 @@ def test_paper_minute_fund_ticks_and_runs_like_a_daily_one(tmp_path, monkeypatch
     tape = CliTape({"AAPL": {"2025-01-07T09:30:00": 100.0, "2025-01-07T09:30:30": 101.0},
                     "SPY": {"2025-01-07T09:30:00": 500.0}},
                    now=datetime(2025, 1, 7, 9, 30, 40, tzinfo=NEW_YORK))  # 10s into the 09:30:30 bar
-    monkeypatch.setattr(run, "FDClient", lambda: tape)
+    monkeypatch.setattr(run, "make_data_client", lambda: tape)
     tick_module = importlib.import_module("hedge_fund.paper.tick")
     class Clock(datetime):  # the tick's wall clock is the tape's; everything else is datetime's
         @classmethod

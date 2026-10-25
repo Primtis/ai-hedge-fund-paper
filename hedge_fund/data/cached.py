@@ -54,7 +54,9 @@ class CachedDataClient:
         live: bool = False,
     ) -> None:
         self._client = client
-        self._dir = Path(cache_dir)
+        # Providers disagree on the same question, so each keeps its own cache.
+        namespace = getattr(client, "cache_namespace", "")
+        self._dir = Path(cache_dir) / (namespace if isinstance(namespace, str) else "")
         self._refresh = refresh
         self._live = live
 

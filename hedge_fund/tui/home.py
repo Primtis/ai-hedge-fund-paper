@@ -14,6 +14,7 @@ from textual.widgets import Footer, Input, OptionList, Static
 from textual.widgets.option_list import Option
 
 from hedge_fund import paths
+from hedge_fund.data.factory import data_key_env
 from hedge_fund.llm import is_supported, load_api_models, provider_for
 from hedge_fund.tui.keys import masked, missing_key, PROVIDER_ENV_VARS, save_credential
 from hedge_fund.tui.palette import BRIGHT, GREEN, MUTED, TEXT
@@ -246,10 +247,10 @@ def demand_run_keys(app, resume) -> bool:
     this gate so the next missing key is asked for in turn. Ask here, not
     deep inside a worker thread: a run that dies on a missing credential has
     already spent minutes of warming."""
-    if not os.environ.get("FINANCIAL_DATASETS_API_KEY"):
+    data_key = data_key_env()  # None when the data provider needs no key
+    if data_key and not os.environ.get(data_key):
         app.push_screen(
-            KeyPromptScreen("Financial Datasets",
-                            "FINANCIAL_DATASETS_API_KEY"),
+            KeyPromptScreen("Financial Datasets", data_key),
             lambda saved: resume() if saved else None)
         return False
     provider = provider_for(os.environ.get("HEDGE_FUND_LLM_MODEL", ""))
