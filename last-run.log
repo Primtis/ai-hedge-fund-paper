@@ -1,0 +1,22 @@
+Traceback (most recent call last):
+  File "/home/runner/work/ai-hedge-fund-paper/ai-hedge-fund-paper/hedge_fund/data/yfinance_client.py", line 62, in __init__
+    import yfinance
+ModuleNotFoundError: No module named 'yfinance'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/opt/hostedtoolcache/Python/3.12.15/x64/bin/aihf", line 6, in <module>
+    sys.exit(main())
+             ^^^^^^
+  File "/home/runner/work/ai-hedge-fund-paper/ai-hedge-fund-paper/hedge_fund/run.py", line 114, in main
+    _paper(args, parser, console)
+  File "/home/runner/work/ai-hedge-fund-paper/ai-hedge-fund-paper/hedge_fund/run.py", line 290, in _paper
+    with make_data_client() as raw:
+         ^^^^^^^^^^^^^^^^^^
+  File "/home/runner/work/ai-hedge-fund-paper/ai-hedge-fund-paper/hedge_fund/data/factory.py", line 38, in make_data_client
+    return YFinanceClient()
+           ^^^^^^^^^^^^^^^^
+  File "/home/runner/work/ai-hedge-fund-paper/ai-hedge-fund-paper/hedge_fund/data/yfinance_client.py", line 64, in __init__
+    raise FDClientError("yfinance is not installed: pip install yfinance") from exc
+hedge_fund.data.client.FDClientError: yfinance is not installed: pip install yfinance
