@@ -6,6 +6,8 @@ on:
   schedule:
     - cron: "30 21 * * 1-5"   # 17:30 ET in summer, 16:30 in winter: after the close either way
   workflow_dispatch:
+  push:
+    paths: [".github/workflows/paper-tick.yml"]   # editing this file re-runs it; a tick is idempotent
 
 concurrency:
   group: paper-tick
@@ -43,19 +45,24 @@ jobs:
           fi
           cp "deploy/$FUND.yaml" "$HOME/.hedge-fund/mandates/"
 
+      # the output is kept as last-run.log on the state branch, readable without a GitHub login
       - name: Deploy once, then tick
+        shell: bash
         run: |
-          if [ ! -d "$HOME/.hedge-fund/paper/$FUND" ]; then
-            aihf paper create "$FUND" --mandate "$HOME/.hedge-fund/mandates/$FUND.yaml" --universe "$UNIVERSE"
-          fi
-          aihf paper tick "$FUND"
+          {
+            if [ ! -d "$HOME/.hedge-fund/paper/$FUND" ]; then
+              aihf paper create "$FUND" --mandate "$HOME/.hedge-fund/mandates/$FUND.yaml" --universe "$UNIVERSE"
+            fi
+            aihf paper tick "$FUND"
+            aihf paper status "$FUND"
+          } 2>&1 | tee "$HOME/last-run.log"
           { echo '```'; aihf paper status "$FUND"; echo '```'; } >> "$GITHUB_STEP_SUMMARY"
 
       # always(): a tick that fails halts the fund, and that halt must persist
       - name: Save fund state
         if: always()
         run: |
-          [ -d "$HOME/.hedge-fund/paper" ] || exit 0
+          [ -d "$HOME/.hedge-fund/paper" ] || [ -f "$HOME/last-run.log" ] || exit 0
           url="https://x-access-token:${{ github.token }}@github.com/${{ github.repository }}.git"
           if git ls-remote --exit-code --heads origin state >/dev/null 2>&1; then
             git clone --quiet --depth 1 --branch state "$url" "$RUNNER_TEMP/state"
@@ -65,7 +72,8 @@ jobs:
             git -C "$RUNNER_TEMP/state" remote add origin "$url"
           fi
           rm -rf "$RUNNER_TEMP/state/paper"
-          cp -r "$HOME/.hedge-fund/paper" "$RUNNER_TEMP/state/paper"
+          [ -d "$HOME/.hedge-fund/paper" ] && cp -r "$HOME/.hedge-fund/paper" "$RUNNER_TEMP/state/paper"
+          [ -f "$HOME/last-run.log" ] && cp "$HOME/last-run.log" "$RUNNER_TEMP/state/last-run.log"
           cd "$RUNNER_TEMP/state"
           git add -A
           git -c user.name=paper-tick -c user.email=paper-tick@users.noreply.github.com \
