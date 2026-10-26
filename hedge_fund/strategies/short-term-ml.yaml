@@ -1,0 +1,11 @@
+# Short-term ML — systematic, daily bars.
+# A ridge model forecasts the next few days' return and retrains itself as
+# new bars arrive. The model is the strategy; it is a baseline to beat.
+name: short-term-ml
+display_name: Short-Term ML
+models:
+  - name: rolling_return
+blend:
+  mode: long_short
+  method: conviction_weighted
+  gross_target: 1.0

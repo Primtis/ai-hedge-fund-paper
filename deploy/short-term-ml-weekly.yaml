@@ -1,0 +1,17 @@
+schema_version: 2
+name: short-term-ml-weekly
+strategies:
+  - name: short-term-ml       # systematic pod: self-retraining 5-day forecast
+    blend: {mode: long_short, method: conviction_weighted, gross_target: 1.0}
+    weight: 1.0
+    models:
+      - name: rolling_return
+risk:
+  max_position_pct: 0.20
+  max_gross_exposure: 1.0
+costs:
+  spread_bps: 5
+  commission_per_share: 0.005
+capital: 100000
+rebalance: weekly
+benchmark: SPY

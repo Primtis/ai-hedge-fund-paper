@@ -1,0 +1,73 @@
+name: paper-tick
+
+# Advances the paper fund by one completed session after each US close. Fake money only:
+# no broker is connected. The fund's book and hash-chained ledger live on the `state` branch.
+on:
+  schedule:
+    - cron: "30 21 * * 1-5"   # 17:30 ET in summer, 16:30 in winter: after the close either way
+  workflow_dispatch:
+
+concurrency:
+  group: paper-tick
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+
+env:
+  FUND: short-term-ml-weekly
+  UNIVERSE: SPY,QQQ,AAPL,MSFT,NVDA,AMZN,TSLA
+  HEDGE_FUND_DATA_PROVIDER: yfinance
+  HOME: ${{ github.workspace }}/home
+
+jobs:
+  tick:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      - run: pip install -e .
+
+      - name: Restore fund state
+        run: |
+          mkdir -p "$HOME/.hedge-fund/mandates"
+          if git ls-remote --exit-code --heads origin state >/dev/null 2>&1; then
+            git fetch --depth 1 origin state
+            git archive FETCH_HEAD | tar -x -C "$HOME/.hedge-fund"
+          fi
+          cp "deploy/$FUND.yaml" "$HOME/.hedge-fund/mandates/"
+
+      - name: Deploy once, then tick
+        run: |
+          if [ ! -d "$HOME/.hedge-fund/paper/$FUND" ]; then
+            aihf paper create "$FUND" --mandate "$HOME/.hedge-fund/mandates/$FUND.yaml" --universe "$UNIVERSE"
+          fi
+          aihf paper tick "$FUND"
+          { echo '```'; aihf paper status "$FUND"; echo '```'; } >> "$GITHUB_STEP_SUMMARY"
+
+      # always(): a tick that fails halts the fund, and that halt must persist
+      - name: Save fund state
+        if: always()
+        run: |
+          [ -d "$HOME/.hedge-fund/paper" ] || exit 0
+          url="https://x-access-token:${{ github.token }}@github.com/${{ github.repository }}.git"
+          if git ls-remote --exit-code --heads origin state >/dev/null 2>&1; then
+            git clone --quiet --depth 1 --branch state "$url" "$RUNNER_TEMP/state"
+          else
+            git init --quiet "$RUNNER_TEMP/state"
+            git -C "$RUNNER_TEMP/state" checkout --quiet -b state
+            git -C "$RUNNER_TEMP/state" remote add origin "$url"
+          fi
+          rm -rf "$RUNNER_TEMP/state/paper"
+          cp -r "$HOME/.hedge-fund/paper" "$RUNNER_TEMP/state/paper"
+          cd "$RUNNER_TEMP/state"
+          git add -A
+          git -c user.name=paper-tick -c user.email=paper-tick@users.noreply.github.com \
+            commit --quiet -m "paper tick $(date -u +%F)" || exit 0
+          git push --quiet origin state
