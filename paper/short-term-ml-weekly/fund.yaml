@@ -1,0 +1,33 @@
+schema_version: 2
+name: short-term-ml-weekly
+spec:
+  schema_version: 2
+  name: short-term-ml-weekly
+  strategies:
+  - name: short-term-ml
+    display_name: null
+    weight: 1.0
+    models:
+    - name: rolling_return
+      weight: 1.0
+      params: {}
+    blend:
+      method: conviction_weighted
+      gross_target: 1.0
+      mode: long_short
+  risk:
+    max_position_pct: 0.2
+    max_gross_exposure: 1.0
+  capital: 100000.0
+  rebalance: weekly
+  benchmark: SPY
+universe:
+- SPY
+- QQQ
+- AAPL
+- MSFT
+- NVDA
+- AMZN
+- TSLA
+broker: paper
+created: '2026-10-26'
