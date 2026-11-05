@@ -1,9 +1,7 @@
-short-term-ml-weekly · session 2026-11-02 · NAV $97,204.21  ·  decided on 7 
-signals, 1 clamps; executes next close
 {
   "schema_version": 2,
   "fund": "short-term-ml-weekly",
-  "session": "2026-11-02",
+  "session": "2026-11-03",
   "universe": [
     "SPY",
     "QQQ",
@@ -13,31 +11,30 @@ signals, 1 clamps; executes next close
     "AMZN",
     "TSLA"
   ],
-  "nav": 97204.21213119509,
-  "cash": 61014.57217758181,
+  "nav": 98090.35865667727,
+  "cash": 32566.91813543703,
   "positions": {
-    "AAPL": 47,
-    "AMZN": 65,
-    "MSFT": 16,
-    "NVDA": 91,
-    "QQQ": -3,
-    "SPY": -1,
-    "TSLA": -48
+    "AAPL": 59,
+    "AMZN": 76,
+    "MSFT": -1,
+    "NVDA": 85,
+    "QQQ": 23,
+    "SPY": 8,
+    "TSLA": -30
   },
   "marks": {
-    "AAPL": 338.32000732421875,
-    "AMZN": 245.6300048828125,
-    "MSFT": 507.1199951171875,
-    "NVDA": 202.05999755859375,
-    "QQQ": 681.0900268554688,
-    "SPY": 752.0999755859375,
-    "TSLA": 403.82000732421875
+    "AAPL": 331.8999938964844,
+    "AMZN": 250.69000244140625,
+    "MSFT": 520.989990234375,
+    "NVDA": 206.69000244140625,
+    "QQQ": 685.280029296875,
+    "SPY": 754.3499755859375,
+    "TSLA": 398.5
   },
   "benchmark": "SPY",
-  "benchmark_close": 752.0999755859375,
-  "rebalance": true,
-  "executed": null,
-  "decision": {
+  "benchmark_close": 754.3499755859375,
+  "rebalance": false,
+  "executed": {
     "schema_version": 2,
     "fund": "short-term-ml-weekly",
     "as_of": "2026-11-02",
@@ -81,13 +78,13 @@ signals, 1 clamps; executes next close
       "TSLA"
     ],
     "marks": {
-      "SPY": 752.0999755859375,
-      "QQQ": 681.0900268554688,
-      "AAPL": 338.32000732421875,
-      "MSFT": 507.1199951171875,
-      "NVDA": 202.05999755859375,
-      "AMZN": 245.6300048828125,
-      "TSLA": 403.82000732421875
+      "AAPL": 331.8999938964844,
+      "AMZN": 250.69000244140625,
+      "MSFT": 520.989990234375,
+      "NVDA": 206.69000244140625,
+      "QQQ": 685.280029296875,
+      "SPY": 754.3499755859375,
+      "TSLA": 398.5
     },
     "skipped": [],
     "strategies": [
@@ -259,29 +256,575 @@ signals, 1 clamps; executes next close
       "SPY": 0.06876284093674526,
       "TSLA": -0.12484586150054555
     },
-    "risk_scale_factor": null
+    "equity_before": 98115.16205184939,
+    "cash_before": 61014.57217758181,
+    "orders": [
+      {
+        "ticker": "MSFT",
+        "side": "sell",
+        "quantity": 17,
+        "price": 520.989990234375
+      },
+      {
+        "ticker": "NVDA",
+        "side": "sell",
+        "quantity": 6,
+        "price": 206.69000244140625
+      },
+      {
+        "ticker": "AAPL",
+        "side": "buy",
+        "quantity": 12,
+        "price": 331.8999938964844
+      },
+      {
+        "ticker": "AMZN",
+        "side": "buy",
+        "quantity": 11,
+        "price": 250.69000244140625
+      },
+      {
+        "ticker": "QQQ",
+        "side": "buy",
+        "quantity": 26,
+        "price": 685.280029296875
+      },
+      {
+        "ticker": "SPY",
+        "side": "buy",
+        "quantity": 9,
+        "price": 754.3499755859375
+      },
+      {
+        "ticker": "TSLA",
+        "side": "buy",
+        "quantity": 18,
+        "price": 398.5
+      }
+    ],
+    "fills": [
+      {
+        "ticker": "MSFT",
+        "side": "sell",
+        "quantity": 17,
+        "price": 520.7294952392579
+      },
+      {
+        "ticker": "NVDA",
+        "side": "sell",
+        "quantity": 6,
+        "price": 206.58665744018555
+      },
+      {
+        "ticker": "AAPL",
+        "side": "buy",
+        "quantity": 12,
+        "price": 332.06594389343263
+      },
+      {
+        "ticker": "AMZN",
+        "side": "buy",
+        "quantity": 11,
+        "price": 250.81534744262694
+      },
+      {
+        "ticker": "QQQ",
+        "side": "buy",
+        "quantity": 26,
+        "price": 685.6226693115234
+      },
+      {
+        "ticker": "SPY",
+        "side": "buy",
+        "quantity": 9,
+        "price": 754.7271505737305
+      },
+      {
+        "ticker": "TSLA",
+        "side": "buy",
+        "quantity": 18,
+        "price": 398.69925
+      }
+    ],
+    "positions": {
+      "AAPL": 59,
+      "AMZN": 76,
+      "MSFT": -1,
+      "NVDA": 85,
+      "QQQ": 23,
+      "SPY": 8,
+      "TSLA": -30
+    },
+    "cash": 32566.91813543703,
+    "nav": 98090.35865667727,
+    "risk_scale_factor": null,
+    "original_assessment": {
+      "schema_version": 2,
+      "fund": "short-term-ml-weekly",
+      "as_of": "2026-11-02",
+      "spec": {
+        "schema_version": 2,
+        "name": "short-term-ml-weekly",
+        "strategies": [
+          {
+            "name": "short-term-ml",
+            "display_name": null,
+            "weight": 1.0,
+            "models": [
+              {
+                "name": "rolling_return",
+                "weight": 1.0,
+                "params": {}
+              }
+            ],
+            "blend": {
+              "method": "conviction_weighted",
+              "gross_target": 1.0,
+              "mode": "long_short"
+            }
+          }
+        ],
+        "risk": {
+          "max_position_pct": 0.2,
+          "max_gross_exposure": 1.0
+        },
+        "capital": 100000.0,
+        "rebalance": "weekly",
+        "benchmark": "SPY"
+      },
+      "universe": [
+        "SPY",
+        "QQQ",
+        "AAPL",
+        "MSFT",
+        "NVDA",
+        "AMZN",
+        "TSLA"
+      ],
+      "marks": {
+        "SPY": 752.0999755859375,
+        "QQQ": 681.0900268554688,
+        "AAPL": 338.32000732421875,
+        "MSFT": 507.1199951171875,
+        "NVDA": 202.05999755859375,
+        "AMZN": 245.6300048828125,
+        "TSLA": 403.82000732421875
+      },
+      "skipped": [],
+      "strategies": [
+        {
+          "name": "short-term-ml",
+          "slice": 1.0,
+          "signals": [
+            {
+              "model_name": "rolling_return",
+              "ticker": "SPY",
+              "date": "2026-11-02",
+              "value": 0.14940414303319866,
+              "reasoning": "forecast +0.30% over 5 bars from a fit on 475 bars",
+              "components": {
+                "forecast_return": 0.00301061838496206
+              },
+              "metadata": {
+                "train_rows": 475,
+                "horizon": 5
+              }
+            },
+            {
+              "model_name": "rolling_return",
+              "ticker": "QQQ",
+              "date": "2026-11-02",
+              "value": 0.36138381094646066,
+              "reasoning": "forecast +0.76% over 5 bars from a fit on 475 bars",
+              "components": {
+                "forecast_return": 0.007569533386580367
+              },
+              "metadata": {
+                "train_rows": 475,
+                "horizon": 5
+              }
+            },
+            {
+              "model_name": "rolling_return",
+              "ticker": "AAPL",
+              "date": "2026-11-02",
+              "value": 0.5577089789700647,
+              "reasoning": "forecast +1.26% over 5 bars from a fit on 475 bars",
+              "components": {
+                "forecast_return": 0.012590033335295403
+              },
+              "metadata": {
+                "train_rows": 475,
+                "horizon": 5
+              }
+            },
+            {
+              "model_name": "rolling_return",
+              "ticker": "MSFT",
+              "date": "2026-11-02",
+              "value": -0.02158970503017157,
+              "reasoning": "forecast -0.04% over 5 bars from a fit on 475 bars",
+              "components": {
+                "forecast_return": -0.00043186120799365915
+              },
+              "metadata": {
+                "train_rows": 475,
+                "horizon": 5
+              }
+            },
+            {
+              "model_name": "rolling_return",
+              "ticker": "NVDA",
+              "date": "2026-11-02",
+              "value": 0.38936146623973505,
+              "reasoning": "forecast +0.82% over 5 bars from a fit on 475 bars",
+              "components": {
+                "forecast_return": 0.008220943574380645
+              },
+              "metadata": {
+                "train_rows": 475,
+                "horizon": 5
+              }
+            },
+            {
+              "model_name": "rolling_return",
+              "ticker": "AMZN",
+              "date": "2026-11-02",
+              "value": 0.4220389824576975,
+              "reasoning": "forecast +0.90% over 5 bars from a fit on 475 bars",
+              "components": {
+                "forecast_return": 0.009003406011119024
+              },
+              "metadata": {
+                "train_rows": 475,
+                "horizon": 5
+              }
+            },
+            {
+              "model_name": "rolling_return",
+              "ticker": "TSLA",
+              "date": "2026-11-02",
+              "value": -0.2712582652873343,
+              "reasoning": "forecast -0.56% over 5 bars from a fit on 475 bars",
+              "components": {
+                "forecast_return": -0.00556443053174392
+              },
+              "metadata": {
+                "train_rows": 475,
+                "horizon": 5
+              }
+            }
+          ],
+          "convictions": {
+            "AAPL": 0.5577089789700647,
+            "AMZN": 0.4220389824576975,
+            "MSFT": -0.02158970503017157,
+            "NVDA": 0.38936146623973505,
+            "QQQ": 0.36138381094646066,
+            "SPY": 0.14940414303319866,
+            "TSLA": -0.2712582652873343
+          },
+          "weights": {
+            "AAPL": 0.2566840050840598,
+            "AMZN": 0.19424226685197005,
+            "MSFT": -0.009936601641167707,
+            "NVDA": 0.17920253097661104,
+            "QQQ": 0.1663258930089007,
+            "SPY": 0.06876284093674526,
+            "TSLA": -0.12484586150054555
+          },
+          "eligible_scores": {
+            "AAPL": 0.5577089789700647,
+            "AMZN": 0.4220389824576975,
+            "MSFT": -0.02158970503017157,
+            "NVDA": 0.38936146623973505,
+            "QQQ": 0.36138381094646066,
+            "SPY": 0.14940414303319866,
+            "TSLA": -0.2712582652873343
+          },
+          "flat_reason": null,
+          "final_contribution": {
+            "AAPL": 0.20000000000000004,
+            "AMZN": 0.19424226685197005,
+            "MSFT": -0.009936601641167707,
+            "NVDA": 0.17920253097661104,
+            "QQQ": 0.1663258930089007,
+            "SPY": 0.06876284093674526,
+            "TSLA": -0.12484586150054555
+          }
+        }
+      ],
+      "target_weights": {
+        "SPY": 0.06876284093674526,
+        "QQQ": 0.1663258930089007,
+        "AAPL": 0.2566840050840598,
+        "MSFT": -0.009936601641167707,
+        "NVDA": 0.17920253097661104,
+        "AMZN": 0.19424226685197005,
+        "TSLA": -0.12484586150054555
+      },
+      "clamps": [
+        {
+          "limit": "max_position_pct",
+          "ticker": "AAPL",
+          "before": 0.2566840050840598,
+          "after": 0.2
+        }
+      ],
+      "final_weights": {
+        "AAPL": 0.2,
+        "AMZN": 0.19424226685197005,
+        "MSFT": -0.009936601641167707,
+        "NVDA": 0.17920253097661104,
+        "QQQ": 0.1663258930089007,
+        "SPY": 0.06876284093674526,
+        "TSLA": -0.12484586150054555
+      },
+      "risk_scale_factor": null
+    },
+    "refreshed_assessment": {
+      "schema_version": 2,
+      "fund": "short-term-ml-weekly",
+      "as_of": "2026-11-02",
+      "spec": {
+        "schema_version": 2,
+        "name": "short-term-ml-weekly",
+        "strategies": [
+          {
+            "name": "short-term-ml",
+            "display_name": null,
+            "weight": 1.0,
+            "models": [
+              {
+                "name": "rolling_return",
+                "weight": 1.0,
+                "params": {}
+              }
+            ],
+            "blend": {
+              "method": "conviction_weighted",
+              "gross_target": 1.0,
+              "mode": "long_short"
+            }
+          }
+        ],
+        "risk": {
+          "max_position_pct": 0.2,
+          "max_gross_exposure": 1.0
+        },
+        "capital": 100000.0,
+        "rebalance": "weekly",
+        "benchmark": "SPY"
+      },
+      "universe": [
+        "SPY",
+        "QQQ",
+        "AAPL",
+        "MSFT",
+        "NVDA",
+        "AMZN",
+        "TSLA"
+      ],
+      "marks": {
+        "SPY": 752.0999755859375,
+        "QQQ": 681.0900268554688,
+        "AAPL": 338.32000732421875,
+        "MSFT": 507.1199951171875,
+        "NVDA": 202.05999755859375,
+        "AMZN": 245.6300048828125,
+        "TSLA": 403.82000732421875
+      },
+      "skipped": [],
+      "strategies": [
+        {
+          "name": "short-term-ml",
+          "slice": 1.0,
+          "signals": [
+            {
+              "model_name": "rolling_return",
+              "ticker": "SPY",
+              "date": "2026-11-02",
+              "value": 0.14940414303319866,
+              "reasoning": "forecast +0.30% over 5 bars from a fit on 475 bars",
+              "components": {
+                "forecast_return": 0.00301061838496206
+              },
+              "metadata": {
+                "train_rows": 475,
+                "horizon": 5
+              }
+            },
+            {
+              "model_name": "rolling_return",
+              "ticker": "QQQ",
+              "date": "2026-11-02",
+              "value": 0.36138381094646066,
+              "reasoning": "forecast +0.76% over 5 bars from a fit on 475 bars",
+              "components": {
+                "forecast_return": 0.007569533386580367
+              },
+              "metadata": {
+                "train_rows": 475,
+                "horizon": 5
+              }
+            },
+            {
+              "model_name": "rolling_return",
+              "ticker": "AAPL",
+              "date": "2026-11-02",
+              "value": 0.5577089789700647,
+              "reasoning": "forecast +1.26% over 5 bars from a fit on 475 bars",
+              "components": {
+                "forecast_return": 0.012590033335295403
+              },
+              "metadata": {
+                "train_rows": 475,
+                "horizon": 5
+              }
+            },
+            {
+              "model_name": "rolling_return",
+              "ticker": "MSFT",
+              "date": "2026-11-02",
+              "value": -0.02158970503017157,
+              "reasoning": "forecast -0.04% over 5 bars from a fit on 475 bars",
+              "components": {
+                "forecast_return": -0.00043186120799365915
+              },
+              "metadata": {
+                "train_rows": 475,
+                "horizon": 5
+              }
+            },
+            {
+              "model_name": "rolling_return",
+              "ticker": "NVDA",
+              "date": "2026-11-02",
+              "value": 0.38936146623973505,
+              "reasoning": "forecast +0.82% over 5 bars from a fit on 475 bars",
+              "components": {
+                "forecast_return": 0.008220943574380645
+              },
+              "metadata": {
+                "train_rows": 475,
+                "horizon": 5
+              }
+            },
+            {
+              "model_name": "rolling_return",
+              "ticker": "AMZN",
+              "date": "2026-11-02",
+              "value": 0.4220389824576975,
+              "reasoning": "forecast +0.90% over 5 bars from a fit on 475 bars",
+              "components": {
+                "forecast_return": 0.009003406011119024
+              },
+              "metadata": {
+                "train_rows": 475,
+                "horizon": 5
+              }
+            },
+            {
+              "model_name": "rolling_return",
+              "ticker": "TSLA",
+              "date": "2026-11-02",
+              "value": -0.2712582652873343,
+              "reasoning": "forecast -0.56% over 5 bars from a fit on 475 bars",
+              "components": {
+                "forecast_return": -0.00556443053174392
+              },
+              "metadata": {
+                "train_rows": 475,
+                "horizon": 5
+              }
+            }
+          ],
+          "convictions": {
+            "AAPL": 0.5577089789700647,
+            "AMZN": 0.4220389824576975,
+            "MSFT": -0.02158970503017157,
+            "NVDA": 0.38936146623973505,
+            "QQQ": 0.36138381094646066,
+            "SPY": 0.14940414303319866,
+            "TSLA": -0.2712582652873343
+          },
+          "weights": {
+            "AAPL": 0.2566840050840598,
+            "AMZN": 0.19424226685197005,
+            "MSFT": -0.009936601641167707,
+            "NVDA": 0.17920253097661104,
+            "QQQ": 0.1663258930089007,
+            "SPY": 0.06876284093674526,
+            "TSLA": -0.12484586150054555
+          },
+          "eligible_scores": {
+            "AAPL": 0.5577089789700647,
+            "AMZN": 0.4220389824576975,
+            "MSFT": -0.02158970503017157,
+            "NVDA": 0.38936146623973505,
+            "QQQ": 0.36138381094646066,
+            "SPY": 0.14940414303319866,
+            "TSLA": -0.2712582652873343
+          },
+          "flat_reason": null,
+          "final_contribution": {
+            "AAPL": 0.20000000000000004,
+            "AMZN": 0.19424226685197005,
+            "MSFT": -0.009936601641167707,
+            "NVDA": 0.17920253097661104,
+            "QQQ": 0.1663258930089007,
+            "SPY": 0.06876284093674526,
+            "TSLA": -0.12484586150054555
+          }
+        }
+      ],
+      "target_weights": {
+        "SPY": 0.06876284093674526,
+        "QQQ": 0.1663258930089007,
+        "AAPL": 0.2566840050840598,
+        "MSFT": -0.009936601641167707,
+        "NVDA": 0.17920253097661104,
+        "AMZN": 0.19424226685197005,
+        "TSLA": -0.12484586150054555
+      },
+      "clamps": [
+        {
+          "limit": "max_position_pct",
+          "ticker": "AAPL",
+          "before": 0.2566840050840598,
+          "after": 0.2
+        }
+      ],
+      "final_weights": {
+        "AAPL": 0.2,
+        "AMZN": 0.19424226685197005,
+        "MSFT": -0.009936601641167707,
+        "NVDA": 0.17920253097661104,
+        "QQQ": 0.1663258930089007,
+        "SPY": 0.06876284093674526,
+        "TSLA": -0.12484586150054555
+      },
+      "risk_scale_factor": null
+    },
+    "execution_as_of": "2026-11-03",
+    "execution_policy": "next_close"
   },
-  "prev_hash": "fb0879f4da7157a11b2db2f5e2b91087f581308b0b1f19722081b45e8ecf0fb9",
-  "hash": "476fb24e8d221c8643806d9908246c21c59b7504bbb523d145c96613a26cfa9a",
+  "decision": null,
+  "prev_hash": "476fb24e8d221c8643806d9908246c21c59b7504bbb523d145c96613a26cfa9a",
+  "hash": "e68dcfb5a00fd90f90b7e43cc8bb848440d526b9d20b2162b39e7976e49319fa",
   "code_version": "2.6.1+5e9ff1a",
   "mandate_hash": "85a7d4d507efb851e6a7e308836afb03cb7953c33f6dac03e7ce719ead1112bf",
   "llm_model": null,
   "snapshot_times": null
-}
-short-term-ml-weekly short-term-ml-weekly  ·  SPY QQQ AAPL MSFT NVDA AMZN TSLA  ·  weekly  ·  7 sessions  ·  last 2026-11-02  ·  NAV $97,204.21 (-2.80%)
-  pending decision, to execute at the next close:
-    AAPL: +20.00%
-    AMZN: +19.42%
-    MSFT: -0.99%
-    NVDA: +17.92%
-    QQQ: +16.63%
-    SPY: +6.88%
-    TSLA: -12.48%
+}short-term-ml-weekly · session 2026-11-03 · NAV $98,090.36  ·  executed 7 orders
+from 2026-11-02, costs $24.80
+
+short-term-ml-weekly short-term-ml-weekly  ·  SPY QQQ AAPL MSFT NVDA AMZN TSLA  ·  weekly  ·  8 sessions  ·  last 2026-11-03  ·  NAV $98,090.36 (-1.91%)
   book:
-    AAPL: +47 @ 338.32
-    AMZN: +65 @ 245.63
-    MSFT: +16 @ 507.12
-    NVDA: +91 @ 202.06
-    QQQ: -3 @ 681.09
-    SPY: -1 @ 752.10
-    TSLA: -48 @ 403.82
+    AAPL: +59 @ 331.90
+    AMZN: +76 @ 250.69
+    MSFT: -1 @ 520.99
+    NVDA: +85 @ 206.69
+    QQQ: +23 @ 685.28
+    SPY: +8 @ 754.35
+    TSLA: -30 @ 398.50
