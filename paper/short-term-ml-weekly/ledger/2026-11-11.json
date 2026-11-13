@@ -1,0 +1,45 @@
+{
+  "schema_version": 2,
+  "fund": "short-term-ml-weekly",
+  "session": "2026-11-11",
+  "universe": [
+    "SPY",
+    "QQQ",
+    "AAPL",
+    "MSFT",
+    "NVDA",
+    "AMZN",
+    "TSLA"
+  ],
+  "nav": 97267.1221425934,
+  "cash": 89319.85186366274,
+  "positions": {
+    "AAPL": -5,
+    "AMZN": -13,
+    "MSFT": 26,
+    "NVDA": -115,
+    "QQQ": 3,
+    "SPY": 2,
+    "TSLA": 41
+  },
+  "marks": {
+    "AAPL": 355.6300048828125,
+    "AMZN": 266.1700134277344,
+    "MSFT": 521.1300048828125,
+    "NVDA": 173.72999572753906,
+    "QQQ": 690.3800048828125,
+    "SPY": 759.8099975585938,
+    "TSLA": 390.8399963378906
+  },
+  "benchmark": "SPY",
+  "benchmark_close": 759.8099975585938,
+  "rebalance": false,
+  "executed": null,
+  "decision": null,
+  "prev_hash": "099ff574269931053dae0a639b615870534e7c4a5e659d39fd829628d1dc74c0",
+  "hash": "0bda8786b9b3d326dcd910377d33cfe67b85ebe9939967550102f8ade0e8b0f2",
+  "code_version": "2.6.1+5e9ff1a",
+  "mandate_hash": "85a7d4d507efb851e6a7e308836afb03cb7953c33f6dac03e7ce719ead1112bf",
+  "llm_model": null,
+  "snapshot_times": null
+}

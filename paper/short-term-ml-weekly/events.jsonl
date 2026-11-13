@@ -11,3 +11,4 @@
 {"time": "2026-11-10T03:45:38+00:00", "kind": "tick", "session": "2026-11-06", "nav": 98033.3561084595, "executed": false, "decided": false}
 {"time": "2026-11-11T01:25:30+00:00", "kind": "tick", "session": "2026-11-09", "nav": 98491.1473987427, "executed": false, "decided": true}
 {"time": "2026-11-12T02:25:00+00:00", "kind": "tick", "session": "2026-11-10", "nav": 97590.90119532778, "executed": true, "decided": false}
+{"time": "2026-11-13T02:02:43+00:00", "kind": "tick", "session": "2026-11-11", "nav": 97267.1221425934, "executed": false, "decided": false}
