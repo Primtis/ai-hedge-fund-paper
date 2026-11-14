@@ -1,9 +1,9 @@
-short-term-ml-weekly · session 2026-11-11 · NAV $97,267.12  ·  marked the book; 
+short-term-ml-weekly · session 2026-11-12 · NAV $98,429.08  ·  marked the book; 
 no rebalance due
 {
   "schema_version": 2,
   "fund": "short-term-ml-weekly",
-  "session": "2026-11-11",
+  "session": "2026-11-12",
   "universe": [
     "SPY",
     "QQQ",
@@ -13,7 +13,7 @@ no rebalance due
     "AMZN",
     "TSLA"
   ],
-  "nav": 97267.1221425934,
+  "nav": 98429.0819662018,
   "cash": 89319.85186366274,
   "positions": {
     "AAPL": -5,
@@ -25,32 +25,32 @@ no rebalance due
     "TSLA": 41
   },
   "marks": {
-    "AAPL": 355.6300048828125,
-    "AMZN": 266.1700134277344,
-    "MSFT": 521.1300048828125,
-    "NVDA": 173.72999572753906,
-    "QQQ": 690.3800048828125,
-    "SPY": 759.8099975585938,
-    "TSLA": 390.8399963378906
+    "AAPL": 354.8800048828125,
+    "AMZN": 267.44000244140625,
+    "MSFT": 523.0,
+    "NVDA": 166.19000244140625,
+    "QQQ": 688.1699829101562,
+    "SPY": 757.1199951171875,
+    "TSLA": 397.45001220703125
   },
   "benchmark": "SPY",
-  "benchmark_close": 759.8099975585938,
+  "benchmark_close": 757.1199951171875,
   "rebalance": false,
   "executed": null,
   "decision": null,
-  "prev_hash": "099ff574269931053dae0a639b615870534e7c4a5e659d39fd829628d1dc74c0",
-  "hash": "0bda8786b9b3d326dcd910377d33cfe67b85ebe9939967550102f8ade0e8b0f2",
+  "prev_hash": "0bda8786b9b3d326dcd910377d33cfe67b85ebe9939967550102f8ade0e8b0f2",
+  "hash": "4360b14494716256069ae0ffb31b0d80b275e2d74cc2269d341eed9b4b2b2afe",
   "code_version": "2.6.1+5e9ff1a",
   "mandate_hash": "85a7d4d507efb851e6a7e308836afb03cb7953c33f6dac03e7ce719ead1112bf",
   "llm_model": null,
   "snapshot_times": null
 }
-short-term-ml-weekly short-term-ml-weekly  ·  SPY QQQ AAPL MSFT NVDA AMZN TSLA  ·  weekly  ·  14 sessions  ·  last 2026-11-11  ·  NAV $97,267.12 (-2.73%)
+short-term-ml-weekly short-term-ml-weekly  ·  SPY QQQ AAPL MSFT NVDA AMZN TSLA  ·  weekly  ·  15 sessions  ·  last 2026-11-12  ·  NAV $98,429.08 (-1.57%)
   book:
-    AAPL: -5 @ 355.63
-    AMZN: -13 @ 266.17
-    MSFT: +26 @ 521.13
-    NVDA: -115 @ 173.73
-    QQQ: +3 @ 690.38
-    SPY: +2 @ 759.81
-    TSLA: +41 @ 390.84
+    AAPL: -5 @ 354.88
+    AMZN: -13 @ 267.44
+    MSFT: +26 @ 523.00
+    NVDA: -115 @ 166.19
+    QQQ: +3 @ 688.17
+    SPY: +2 @ 757.12
+    TSLA: +41 @ 397.45
